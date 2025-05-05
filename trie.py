@@ -47,8 +47,26 @@ class Trie:
                 node.children[char] = TrieNode()
             node = node.children[char]
         node.is_end = True
-    
+
     def searchr(self, cur_node, word: str) -> bool:
+        """Recursively search for a word in the trie starting from given node.
+        
+        Time Complexity: O(m) where m is length of word being searched
+        - Each recursive call processes one character
+        - Maximum recursion depth is length of word
+        - Each character comparison and dictionary lookup is O(1)
+        
+        Space Complexity: O(m) where m is length of word being searched
+        - Each recursive call adds one frame to call stack
+        - Maximum call stack depth is length of word
+        - No additional data structures used beyond call stack
+        
+        Args:
+            cur_node: Current TrieNode in traversal
+            word: Remaining substring to search for
+        Returns:
+            bool: True if word exists in trie, False otherwise
+        """
         if len(word) == 0 and cur_node.is_end is True:
             return True
         elif len(word) == 0 or cur_node.children is None:
@@ -60,9 +78,21 @@ class Trie:
             return self.searchr(cur_node.children[word[0]], word[1:])
 
     def search(self, word: str) -> bool:
-        """Search for a complete word in the trie"""
-        return self.searchr(self.root, word)
-
+        """Search for a complete word in the trie.
+        
+        Time Complexity: O(m) where m is length of word being searched
+        - Iterates through each character in word once
+        - Dictionary lookups are O(1)
+        
+        Space Complexity: O(1)
+        - Only uses a single node reference variable
+        - No additional data structures created
+        
+        Args:
+            word: The string to search for in the trie
+        Returns:
+            bool: True if word exists in trie, False otherwise
+        """
         node = self.root
         for char in word:
             if char not in node.children:
@@ -101,11 +131,12 @@ def main():
     
     # Search for words
     print("Search results:")
-    print(f"Search 'app': {trie.search('app')}")  # True
-    print(f"Search 'apple': {trie.search('apple')}")  # True
-    print(f"Search 'appl': {trie.search('appl')}")  # False
-    print(f"Search 'ban': {trie.search('ban')}")  # False
-    print(f"Search 'banana': {trie.search('banana')}")  # True
+    test_words = ['app', 'apple', 'appl', 'ban', 'banana']
+    print("\nComparing search() and searchr():")
+    for word in test_words:
+        print(f"Word: '{word}'")
+        print(f"  search(): {trie.search(word)}")
+        print(f"  searchr(): {trie.searchr(trie.root, word)}")
     
     # Check prefixes
     print("\nPrefix checks:")
