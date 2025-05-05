@@ -41,7 +41,10 @@ def main():
         "LVIII": 58, 
         "MCMXCIV": 1994,
         "XIV": 14,
-        "IX": 9
+        "IX": 9,
+        "IV": 4,
+        "XXV": 25,
+        "MMMCMXCIX": 3999,
     }
     
     for roman,expected in test_cases.items():
